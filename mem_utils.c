@@ -1,7 +1,4 @@
 /* mem_utils.c - implementation of function check_heap
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * Check for possible problems with the free list data structure.
  *
@@ -24,7 +21,7 @@ void check_heap() {
     FreeNode* current = head;
     while (current) {
         // check that the size is no smaller than the allowed minimum size
-        assert(current->size >= 16);
+        assert(current->size >= 16);  // magic number
         if (current->next) {
             // this checks if the blocks order correctly, if they overlapped,
             // and if they touched

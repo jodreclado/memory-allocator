@@ -1,7 +1,4 @@
 /* getmem.c - implementation of function getmem
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * Return a pointer to a new block of storage with at least size bytes of memory.
  * The pointer to the returned block should be aligned on an 16-byte boundary.
@@ -100,7 +97,7 @@ FreeNode* newNode(uintptr_t size) {
     node->size = size;
     totalSize += msize;
     totalFree += msize;
-    freeBlocks++;
+    ++freeBlocks;
   } else {
     fprintf(stderr, "bench: getmem malloc failed\n");
   }
@@ -131,7 +128,7 @@ void* splitNode(FreeNode** prevPtr, uintptr_t size) {
     current->size = size;
   } else {
     *prevPtr = current->next;
-    freeBlocks--;
+    --freeBlocks;
   }
   totalFree -= current->size + nsize;  // includes header spaces
   // return block without header space

@@ -1,7 +1,4 @@
 /* print_heap.c - implementation of function print_heap
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * Print a formatted listing on file f showing the blocks on the free list.
  * Each line of output should describe one free block and begin with two

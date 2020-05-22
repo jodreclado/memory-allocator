@@ -1,7 +1,4 @@
 /* bench.c - source code for the bench program
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * This program executes a large number of calls to functions getmem and freemem
  * to allocate and free blocks of random sizes and in random order.
@@ -61,18 +58,18 @@ int main(int argc, char *argv[]) {
   start = clock();
 
   if (par[0] < 10) {
-    for (int i = 1; i <= par[0]; i++) {
+    for (int i = 1; i <= par[0]; ++i) {
       doTest(par[1], par[2], par[3], par[4], myNodes);
       current = (float) (clock() - start) / CLOCKS_PER_SEC;
       get_mem_stats(&total_size, &total_free, &free_blocks);
       printf("Trial: %d out of %d\n", i, par[0]);
       printTestStatistics(current, total_size, free_blocks,
           (free_blocks) ? round(total_free/free_blocks) : 0);
-      j++;
+      ++j;
     }
   } else {
     int pct = round(0.1 * par[0]);  // percent progress
-    for (int i = 1; i <= par[0]; i++) {
+    for (int i = 1; i <= par[0]; ++i) {
       doTest(par[1], par[2], par[3], par[4], myNodes);
       if (!(i % pct)) {
         current = (float) (clock() - start) / CLOCKS_PER_SEC;
@@ -81,7 +78,7 @@ int main(int argc, char *argv[]) {
         printf(" (%.2f%%)\n", (float) i / (float) par[0] * 100);
         printTestStatistics(current, total_size, free_blocks,
             (free_blocks) ? round(total_free/free_blocks) : 0);
-        j++;
+        ++j;
         pct = round(0.1 * (j+1) * par[0]);  // next percent milestone
       }
     }
@@ -127,7 +124,7 @@ void doTest(unsigned int pctget, unsigned int pctlarge,
     if (ptr) {  // getmem doesn't return null
       myNodes[totalPtrs] = ptr;
       totalPtrs++;
-      memset(ptr, 254, 16);  // 0xFE = 254
+      memset(ptr, 254, 16);  // 0xFE = 254 - magic number
     }
   } else {  // freemem call
     if (totalPtrs) {
@@ -135,7 +132,7 @@ void doTest(unsigned int pctget, unsigned int pctlarge,
       freemem(myNodes[freedNode]);
       myNodes[freedNode] = myNodes[totalPtrs - 1];
       myNodes[totalPtrs - 1] = NULL;
-      totalPtrs--;
+      --totalPtrs;
     }
   }
 }
@@ -155,7 +152,7 @@ int parseArguments(unsigned int par[], int argc, char *argv[]) {
     fprintf(stderr, "bench: cannot take more than 6 parameters\n");
     ret = 1;
   }
-  for (int i = 1; i < argc; i++) {
+  for (int i = 1; i < argc; ++i) {
     if (isValid(argv[i])) {
       par[i-1] = atoi(argv[i]);
     } else {
@@ -170,7 +167,7 @@ int parseArguments(unsigned int par[], int argc, char *argv[]) {
   }
   if (!ret) {
     printf("Parameters:\n");
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; ++i) {
       printf("   %-15s %u\n", prnt[i], par[i]);
     }
     printf("\n");
@@ -183,7 +180,7 @@ int parseArguments(unsigned int par[], int argc, char *argv[]) {
  * str: input char array
  */
 int isValid(char str[]) {
-  for (int i = 0; str[i] != '\0'; i++) {
+  for (int i = 0; str[i] != '\0'; ++i) {
     if (!isdigit(str[i])) {
       return 0;
     }

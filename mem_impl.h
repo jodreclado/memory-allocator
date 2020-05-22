@@ -1,7 +1,4 @@
 /* mem_impl.h - interface to memory manager functions
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  */
 
 #ifndef MEMIMPL_H

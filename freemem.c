@@ -1,7 +1,4 @@
 /* freemem.c - implementation of function freemem
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * Return the block of storage at location p to the pool of available free storage.
  * The pointer value p must be one that was obtained as the result of a call to getmem.
@@ -31,14 +28,14 @@ void freemem(void* p) {
     FreeNode* node = (FreeNode*) ((uintptr_t) p - nsize);
     uintptr_t currSize = node->size;
     totalFree += currSize + nsize;  // totalFree includes header spaces
-    freeBlocks++;
+    ++freeBlocks;
     // p is before the start of free list
     if ((uintptr_t)node < (uintptr_t)head) {
       if ((uintptr_t)p + currSize == (uintptr_t)head) {  // if they are adjacent
         node->next = head->next;
         node->size = head->size + currSize + nsize;
         head = node;
-        freeBlocks--;
+        --freeBlocks;
       } else {
         node->next = head;
         head = node;
@@ -54,7 +51,7 @@ void freemem(void* p) {
       if (current && (uintptr_t)current + nsize + current->size ==
             (uintptr_t)node) {
         current->size = current->size + currSize + nsize;
-        freeBlocks--;
+        --freeBlocks;
       } else if (current) {
         node->next = current->next;
         current->next = node;
@@ -64,7 +61,7 @@ void freemem(void* p) {
       }
       if (nextNode && (uintptr_t)node + nsize + currSize ==
             (uintptr_t)nextNode) {  // if node touches nextNode
-        freeBlocks--;
+        --freeBlocks;
         // if p is not connected with previous free block
         if (current->next == node) {
           node->size = node->size + nextNode->size + nsize;

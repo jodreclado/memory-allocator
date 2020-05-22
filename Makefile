@@ -1,7 +1,4 @@
 # Makefile for the memory management package.
-# CSE 374, HW 6, Team 'bf'
-# Authors: Manchen Jin, Rogers Xiang
-# May 24, 2018
 # Adapted from a class example makefile (MakefileV2_RenameToMakefile).
 
 # The compiler: gcc for C programs

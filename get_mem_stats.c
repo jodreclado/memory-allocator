@@ -1,7 +1,4 @@
 /* get_mem_stats.c - implementation of function get_mem_stats
- * CSE 374, HW6, Team 'bf'
- * Authors: Manchen Jin, Rogers Xiang
- * May 24, 2018
  *
  * Store statistics about the current state of the memory manager in the
  * three integer variables whose addresses are given as arguments.

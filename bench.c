@@ -67,11 +67,11 @@ int main(int argc, char *argv[]) {
           (free_blocks) ? round(total_free/free_blocks) : 0);
       ++j;
     }
-  } else {
+  } else {  // consider moving this chunk into a separate function
     int pct = round(0.1 * par[0]);  // percent progress
     for (int i = 1; i <= par[0]; ++i) {
       doTest(par[1], par[2], par[3], par[4], myNodes);
-      if (!(i % pct)) {
+      if (!(i % pct)) {  
         current = (float) (clock() - start) / CLOCKS_PER_SEC;
         get_mem_stats(&total_size, &total_free, &free_blocks);
         printf("Trial: %d out of %d", i, par[0]);
@@ -123,8 +123,8 @@ void doTest(unsigned int pctget, unsigned int pctlarge,
     }
     if (ptr) {  // getmem doesn't return null
       myNodes[totalPtrs] = ptr;
-      totalPtrs++;
-      memset(ptr, 254, 16);  // 0xFE = 254 - magic number
+      ++totalPtrs;
+      memset(ptr, 254, 16);  // 0xFE = 254 (magic number)
     }
   } else {  // freemem call
     if (totalPtrs) {
